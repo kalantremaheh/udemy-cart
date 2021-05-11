@@ -8,7 +8,7 @@ import { Ingredient } from '../shared/ingredient.model';
 // })
 export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>()
-  // recipesChanged = new Subject<Recipe[]>();
+  recipesChanged = new Subject<Recipe[]>();
   constructor() { }
 
   private recipes: Recipe[] = [
@@ -42,13 +42,20 @@ export class RecipeService {
 
   }
 
-  // addRecipe(recipe: Recipe) {
-  //   this.recipes.push(recipe);
-  //   this.recipesChanged.next(this.recipes.slice());
-  // }
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
-  // updateRecipe(index: number, newRecipe: Recipe) {
-  //   this.recipes[index] = newRecipe;
-  //   this.recipesChanged.next(this.recipes.slice());
-  // }
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index:number){
+    this.recipes.splice(index,1)
+    console.log('--delete recipe--',this.recipes.slice())
+    this.recipesChanged.next(this.recipes.slice())
+  }
+
 }
